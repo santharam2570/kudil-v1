@@ -1,26 +1,167 @@
 @import "tailwindcss";
+@import "lenis/dist/lenis.css";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+@theme {
+  --color-maroon-950: #22050a;
+  --color-maroon-900: #3d0a0e;
+  --color-maroon-800: #5c0f14;
+  --color-maroon-700: #7b1113;
+  --color-maroon-600: #9b1b1e;
+  --color-maroon-500: #b8292c;
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+  --color-gold-200: #f8e7b4;
+  --color-gold-300: #f3d98b;
+  --color-gold-400: #e8c46a;
+  --color-gold-500: #d4a64a;
+  --color-gold-600: #b8862f;
+  --color-gold-700: #8a5f1c;
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+  --color-cream-50: #fffaf0;
+  --color-cream-100: #fbf3e4;
+  --color-cream-200: #f4e6c8;
+  --color-cream-300: #ead3a5;
+
+  --color-leaf-700: #0b3d25;
+  --color-leaf-600: #0f5132;
+  --color-leaf-500: #17704a;
+
+  --color-navy-700: #14234a;
+  --color-navy-600: #1d2f5e;
+
+  --color-saffron-500: #e8641b;
+  --color-saffron-400: #f5852f;
+  --color-copper-500: #b8673a;
+  --color-copper-600: #8f4a25;
+
+  --animate-marquee: marquee 38s linear infinite;
+  --animate-marquee-rev: marquee-rev 38s linear infinite;
+  --animate-spin-slow: spin 40s linear infinite;
+  --animate-float: float 6s ease-in-out infinite;
+  --animate-ember: ember 7s linear infinite;
+  --animate-ring: ring 1.4s ease-in-out infinite;
+
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+  @keyframes marquee-rev {
+    from { transform: translateX(-50%); }
+    to { transform: translateX(0); }
+  }
+  @keyframes float {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    50% { transform: translateY(-18px) rotate(6deg); }
+  }
+  @keyframes ember {
+    0% { transform: translateY(0) scale(1); opacity: 0; }
+    10% { opacity: 1; }
+    100% { transform: translateY(-110vh) scale(0.3); opacity: 0; }
+  }
+  @keyframes ring {
+    0%, 100% { transform: rotate(0); }
+    10%, 30% { transform: rotate(-14deg); }
+    20%, 40% { transform: rotate(14deg); }
+    50% { transform: rotate(0); }
   }
 }
 
+@theme inline {
+  --font-display: var(--font-cinzel), "Times New Roman", serif;
+  --font-serif: var(--font-playfair), Georgia, serif;
+  --font-sans: var(--font-poppins), system-ui, sans-serif;
+  --font-tamil: var(--font-baloo-thambi), var(--font-poppins), sans-serif;
+}
+
+html {
+  background: var(--color-maroon-950);
+}
+
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--color-cream-100);
+  color: var(--color-maroon-950);
+  font-family: var(--font-sans);
+  overflow-x: clip;
+}
+
+::selection {
+  background: var(--color-gold-400);
+  color: var(--color-maroon-950);
+}
+
+.text-gold-gradient {
+  background: linear-gradient(180deg, #fff1c1 0%, #f3d98b 35%, #d4a64a 65%, #8a5f1c 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.bg-paper {
+  background-color: var(--color-cream-100);
+  background-image:
+    radial-gradient(circle at 20% 10%, rgba(212, 166, 74, 0.14), transparent 40%),
+    radial-gradient(circle at 85% 80%, rgba(123, 17, 19, 0.08), transparent 45%),
+    radial-gradient(rgba(138, 95, 28, 0.08) 1px, transparent 1px);
+  background-size: auto, auto, 18px 18px;
+}
+
+.bg-royal {
+  background-color: var(--color-maroon-900);
+  background-image:
+    radial-gradient(ellipse at 50% 0%, rgba(232, 196, 106, 0.18), transparent 55%),
+    radial-gradient(ellipse at 50% 120%, rgba(232, 100, 27, 0.25), transparent 55%),
+    repeating-linear-gradient(45deg, rgba(255, 255, 255, 0.025) 0 2px, transparent 2px 14px);
+}
+
+/* SVG parts animated with CSS keyframes need their own box as the origin */
+.svg-origin-bottom {
+  transform-box: fill-box;
+  transform-origin: 50% 100%;
+}
+.svg-origin-center {
+  transform-box: fill-box;
+  transform-origin: 50% 50%;
+}
+
+.flame {
+  animation: flicker 0.32s ease-in-out infinite alternate;
+}
+.flame:nth-child(2n) {
+  animation-duration: 0.41s;
+  animation-delay: -0.2s;
+}
+.flame:nth-child(3n) {
+  animation-duration: 0.27s;
+}
+@keyframes flicker {
+  0% { transform: scale(1, 1) skewX(0deg); }
+  50% { transform: scale(0.94, 1.12) skewX(-4deg); }
+  100% { transform: scale(1.04, 0.9) skewX(4deg); }
+}
+
+.steam path {
+  stroke-dasharray: 12 18;
+  animation: steam 2.6s linear infinite;
+}
+.steam path:nth-child(2) { animation-duration: 3.1s; animation-delay: -1s; }
+.steam path:nth-child(3) { animation-duration: 2.2s; animation-delay: -0.6s; }
+@keyframes steam {
+  from { stroke-dashoffset: 0; }
+  to { stroke-dashoffset: 120; }
+}
+
+.ornament-divider {
+  background:
+    linear-gradient(90deg, transparent, var(--color-gold-500), transparent) center / 100% 1px no-repeat;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .flame,
+  .steam path,
+  .animate-marquee,
+  .animate-marquee-rev,
+  .animate-ember,
+  .animate-float,
+  .animate-spin-slow {
+    animation: none !important;
+  }
 }
